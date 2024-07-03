@@ -1,0 +1,148 @@
+.navbar {
+	width: 100%;
+	height: 70px;
+	background-color: #3bb19b;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.navbar h1 {
+	color: white;
+	font-size: 25px;
+	margin-left: 20px;
+}
+
+.white_btn {
+	border: none;
+	outline: none;
+	padding: 12px 0;
+	background-color: white;
+	border-radius: 20px;
+	width: 120px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+	margin-right: 20px;
+}
+
+.main {
+	width: 100vw;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: #00416a; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to top, #00416a, #e4e5e6); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to top, #00416a, #e4e5e6);
+}
+
+.heading {
+	font-size: 35px;
+	color: white;
+}
+
+.container {
+	width: 50vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	border-radius: 10px;
+	background-color: white;
+	box-sizing: rgb(0 0 0 / 20%) 0px 3px 3px -2px,
+		rgb(0 0 0 / 14%) 0px 3px 4px 0px, rgb(0 0 0 / 12%) 0px 1px 8px 0px;
+}
+@media (max-width: 700px) {
+	.container {
+		width: 80vw;
+	}
+}
+.form_container {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 40px;
+	margin-bottom: 15px;
+}
+
+.input {
+	flex-grow: 1;
+	height: inherit;
+	outline: none;
+	border: 1px solid #00264d;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	font-size: 16px;
+	padding-left: 5px;
+	box-shadow: 0px 2px 35px 6px rgba(203, 124, 239, 0.3);
+}
+
+.submit_btn {
+	font-size: 16px;
+	font-weight: bold;
+	width: 100px;
+	height: inherit;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	background-color:  #00264d;
+	color: white;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.task_container {
+	width: 100%;
+	height: 40px;
+	padding: 5px;
+	margin: 5px 0;
+	border-radius: 5px;
+	border: 1px solid  #00264d;
+	box-sizing: rgb(0 0 0 / 20%) 0px 3px 3px -2px,
+		rgb(0 0 0 / 14%) 0px 3px 4px 0px, rgb(0 0 0 / 12%) 0px 1px 8px 0px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.check_box {
+	cursor: pointer;
+	font-size: 16px;
+	outline: none;
+}
+
+.task_text {
+	flex-grow: 1;
+	padding: 0 10px;
+}
+
+.line_through {
+	text-decoration: line-through;
+}
+
+.edit_task,
+.remove_task {
+	outline: none;
+	border: none;
+	background: transparent;
+	color:  #00264d;
+	font-size: 16px;
+	cursor: pointer;
+	padding: 0 5px;
+}
+
+.no_tasks {
+	width: 100%;
+	height: 60px;
+	font-size: 18px;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	border-radius: 5px;
+	background-color: #cecbcb75;
+	color: #252525a4;
+}
