@@ -1,3 +1,4 @@
+//client/src/App.js
 import { Route, Routes, Navigate } from "react-router-dom";
 import Main from "./components/Main";
 import Signup from "./components/Singup";

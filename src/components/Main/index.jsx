@@ -1,3 +1,4 @@
+//client/src/components/Main/index.js
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./styles.module.css";
@@ -11,64 +12,58 @@ const Main = () => {
     useEffect(() => {
         async function fetchTasks() {
             try {
-                const { data: res } = await axios.get(url, {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
-                });
-                setTasks(res);
+                const res = await fetch(url, { cache: 'no-store' });
+                if (!res.ok) {
+                    throw new Error('Failed to fetch tasks');
+                }
+                const data = await res.json();
+                setTasks(data.tasks);
             } catch (error) {
-                console.error('Error loading tasks:', error.response ? error.response.data : error.message);
-                setError(error.response ? error.response.data.message : error.message);
+                console.log('Error loading tasks:', error);
             }
         }
         fetchTasks();
     }, []);
 
     const handleChange = (e) => {
-        setTask({ ...task, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setTask({ ...task, [name]: value });
     };
 
-  const addTask = async (e) => {
-    e.preventDefault();
-    if (!task.title || !task.task) {
-        alert('Both Title and Task are required');
-        return;
-    }
-    try {
-        let res;
-        if (task._id) {
-            res = await axios.put(`${url}/${task._id}`, {
-                title: task.title,
-                task: task.task,
-                completed: task.completed,
-            }, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
-            });
-            setTasks(prevTasks => prevTasks.map(t => t._id === task._id ? res.data.task : t));
-        } else {
-            res = await axios.post(url, task, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
-            });
-            const newTask = res.data.task;
-            setTasks(prevTasks => [...prevTasks, newTask]);
+    const addTask = async (e) => {
+        e.preventDefault();
+        if (!task.title || !task.task) {
+            alert('Both Title and Task are required');
+            return;
         }
-        setTask({ title: "", task: "", completed: false });
-    } catch (error) {
-        console.error('Error adding/updating task:', error.response ? error.response.data : error.message);
-        setError(error.response ? error.response.data.message : error.message);
-    }
-};
+        try {
+            let res;
+            if (task._id) {
+                res = await axios.put(`${url}/${task._id}`, {
+                    title: task.title,
+                    task: task.task,
+                    completed: task.completed,
+                });
+                setTasks(tasks.map(t => t._id === task._id ? res.data.task : t));
+            } else {
+                res = await axios.post(url, task);
+                const newTask = res.data.task;
+                setTasks(prevTasks => [...prevTasks, newTask]);
+            }
+            setTask({ title: "", task: "", completed: false });
+        } catch (error) {
+            console.log('Error adding/updating task:', error.response ? error.response.data : error.message);
+        }
+    };
 
     const updateTask = async (id) => {
         try {
             const taskToUpdate = tasks.find(t => t._id === id);
             const updatedTask = { ...taskToUpdate, completed: !taskToUpdate.completed };
-            const res = await axios.put(`${url}/${id}`, updatedTask, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
-            });
+            const res = await axios.put(`${url}/${id}`, updatedTask);
             setTasks(tasks.map(t => t._id === id ? res.data.task : t));
         } catch (error) {
-            console.error('Error updating task:', error.response ? error.response.data : error.message);
-            setError(error.response ? error.response.data.message : error.message);
+            console.log('Error updating task:', error.response ? error.response.data : error.message);
         }
     };
 
@@ -81,13 +76,10 @@ const Main = () => {
         const confirmed = window.confirm("Are you sure?");
         if (confirmed) {
             try {
-                await axios.delete(`${url}/${id}`, {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
-                });
+                await axios.delete(`${url}/${id}`);
                 setTasks(tasks.filter((task) => task._id !== id));
             } catch (error) {
                 console.error('Error deleting task:', error.response ? error.response.data : error.message);
-                setError(error.response ? error.response.data.message : error.message);
             }
         }
     };
